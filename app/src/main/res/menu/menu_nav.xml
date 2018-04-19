@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_lista_ocorrencias"
+            android:icon="@drawable/ic_lista_ocorrencias"
+            android:title="Todas Ocorrências" />
+
+        <item
+            android:id="@+id/menu_favorito"
+            android:icon="@drawable/ic_favorito"
+            android:title="Favoritos" />
+
+        <item
+            android:id="@+id/menu_ocorrencia_prisao"
+            android:icon="@drawable/prisoner"
+            android:title="Ocorrências com prisão" />
+
+
+    </group>
+
+    <item
+        android:id="@+id/submenu_outros"
+        android:title="Pesquisar">
+
+        <menu>
+            <item
+                android:id="@+id/menu_procurar"
+                android:icon="@drawable/ic_procurar"
+                android:title="Procurar Ocorrência" />
+
+        </menu>
+
+    </item>
+
+</menu>

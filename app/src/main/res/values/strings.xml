@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Capstone</string>
+    <string name="close_drawer">Fechar</string>
+    <string name="open_drawer">Abrir</string>
+</resources>
