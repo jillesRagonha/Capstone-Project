@@ -13,24 +13,29 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <include layout="@layout/toolbar" />
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/lista_ocorrencias_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
                 tools:listitem="@layout/item_ocorrencia">
 
             </android.support.v7.widget.RecyclerView>
 
 
-        </LinearLayout>
+        </android.support.constraint.ConstraintLayout>
 
 
         <android.support.design.widget.FloatingActionButton
