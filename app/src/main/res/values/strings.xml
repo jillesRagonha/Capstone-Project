@@ -2,4 +2,10 @@
     <string name="app_name">Capstone</string>
     <string name="close_drawer">Fechar</string>
     <string name="open_drawer">Abrir</string>
+    <string name="seleciona_foto">Selecione uma foto</string>
+    <string name="erro_seleciona_imagem">Ops, algo deu errado! Tente Novamente</string>
+    <string name="erro_nao_selecionou_imagem">Você não selecionou uma imagem</string>
+    <string name="editNome">Nome</string>
+    <string name="erro_nome_pessoa">O nome da Pessoa não pode ser vazio</string>
+    <string name="erro_documento_pessoa">O campo documento não pode estar vazio</string>
 </resources>

@@ -8,22 +8,23 @@
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/nav_image_perfil"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_marginTop="8dp"
         android:src="@drawable/ic_pessoa" />
 
     <TextView
+        android:id="@+id/nav_text_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="Jilles Ragonha"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
+        android:id="@+id/nav_text_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="jilles.ragonha@hotmail.com" />
+        android:layout_marginTop="8dp" />
 </LinearLayout>

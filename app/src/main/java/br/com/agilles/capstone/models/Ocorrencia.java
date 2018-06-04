@@ -1,14 +1,23 @@
 package br.com.agilles.capstone.models;
 
-public class Ocorrencia {
+import java.io.Serializable;
+import java.util.List;
+
+public class Ocorrencia implements Serializable {
 
     private String data;
     private Endereco endereco;
     private String natureza;
     private String descricao;
-    private Pessoa pessoa;
+    private List<Pessoa> pessoas;
     private String foto;
+    private Usuario usuario;
+    private boolean favorito;
 
+
+    public boolean isFavorito() {
+        return favorito;
+    }
 
     public String getData() {
         return data;
@@ -42,19 +51,27 @@ public class Ocorrencia {
         this.descricao = descricao;
     }
 
-    public Pessoa getPessoa() {
-        return pessoa;
-    }
-
-    public void setPessoa(Pessoa pessoa) {
-        this.pessoa = pessoa;
-    }
-
     public String getFoto() {
         return foto;
     }
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public List<Pessoa> getPessoas() {
+        return pessoas;
+    }
+
+    public void setPessoas(List<Pessoa> pessoas) {
+        this.pessoas = pessoas;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

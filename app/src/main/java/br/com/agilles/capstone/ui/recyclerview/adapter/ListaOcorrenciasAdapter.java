@@ -6,16 +6,21 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-
 import br.com.agilles.capstone.R;
 import br.com.agilles.capstone.models.Ocorrencia;
+import br.com.agilles.capstone.models.Pessoa;
 import br.com.agilles.capstone.ui.recyclerview.adapter.listener.OnItemClickListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ListaOcorrenciasAdapter extends RecyclerView.Adapter<ListaOcorrenciasAdapter.OcorrenciasViewHolder> {
 
@@ -54,11 +59,11 @@ public class ListaOcorrenciasAdapter extends RecyclerView.Adapter<ListaOcorrenci
         @BindView(R.id.item_ocorrencia_titulo)
         TextView mTituloTextView;
 
-        @BindView(R.id.item_ocorrencia_texto_bairro)
-        TextView mBairroTextView;
-
         @BindView(R.id.item_ocorrencia_texto_data)
         TextView mDataTextView;
+
+        @BindView(R.id.item_ocorrencia_image_view)
+        ImageView imagemDaOcorrencia;
 
         private Ocorrencia ocorrencia;
 
@@ -82,13 +87,21 @@ public class ListaOcorrenciasAdapter extends RecyclerView.Adapter<ListaOcorrenci
         }
 
         private void preencheCampos(Ocorrencia ocorrencia) {
-            mBairroTextView.setText(ocorrencia.getEndereco().getBairro());
             mTituloTextView.setText(ocorrencia.getNatureza());
             mDataTextView.setText(ocorrencia.getData());
+
+            Picasso mPicasso = Picasso.get();
+            mPicasso.setIndicatorsEnabled(true);
+            mPicasso.load(ocorrencia.getFoto())
+                    .placeholder(R.drawable.imagem_placeholder)
+                    .into(imagemDaOcorrencia);
         }
+
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+
+
 }

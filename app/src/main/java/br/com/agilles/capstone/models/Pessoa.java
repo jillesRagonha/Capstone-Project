@@ -1,15 +1,24 @@
 package br.com.agilles.capstone.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Pessoa {
+public class Pessoa implements Serializable {
 
     private String nome;
     private Date dataNascimento;
     private String tipoDocumento;
     private String numDocumento;
     private String condicao;
+    private boolean preso;
 
+    public boolean isPreso() {
+        return preso;
+    }
+
+    public void setPreso(boolean preso) {
+        this.preso = preso;
+    }
 
     public String getNome() {
         return nome;
