@@ -14,7 +14,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,16 +22,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -52,16 +47,13 @@ import br.com.agilles.capstone.models.Pessoa;
 import br.com.agilles.capstone.models.Usuario;
 import br.com.agilles.capstone.utils.Constantes;
 import br.com.agilles.capstone.utils.DataUtils;
+import br.com.agilles.capstone.utils.FirebaseUtils;
 import br.com.agilles.capstone.utils.ImagemUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FormularioOcorrenciaActivity extends AppCompatActivity implements Constantes {
-
-
-    public static final int PICK_IMAGE = 1;
-    public static final int INSERE_PESSOA = 2;
 
     @BindView(R.id.badge)
     NotificationBadge mBadge;
@@ -88,20 +80,15 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
     Button botaoOk;
 
     private Ocorrencia ocorrenciaEdicao;
-
     private Uri imageUri;
-
     Ocorrencia ocorrencia = new Ocorrencia();
-    int countBadgePessoa = 0;
     List<Pessoa> pessoas = new ArrayList<>();
 
-    FirebaseDatabase mFirebaseDatabase;
-    DatabaseReference mOcorrenciaDatabaseReference;
-    FirebaseStorage mFirebaseStorage;
-    StorageReference mFotosOcorrenciasStorageReference;
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseStorage mFirebaseStorage = new FirebaseUtils().getmFirebaseStorage();
+    StorageReference mFotosOcorrenciasStorageReference = new FirebaseUtils().getmFotosOcorrenciasStorageReference();
+    FirebaseUser user = new FirebaseUtils().getUser();
 
-    FirebaseFirestore mFirebasestore;
+    FirebaseFirestore mFirebasestore = new FirebaseUtils().getmFirebaseFirestore();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +98,6 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         ButterKnife.bind(this);
 
         configuraToolbar();
-        configuraFirebase();
         ocorrenciaEdicao = (Ocorrencia) getIntent().getSerializableExtra(CHAVE_OCORRENCIA);
         if (ocorrenciaEdicao != null) {
             preencheCampos();
@@ -124,31 +110,18 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         mEditTextNatureza.setText(ocorrenciaEdicao.getNatureza());
         mEditTextDescicao.setText(ocorrenciaEdicao.getDescricao());
         if (!ocorrenciaEdicao.getPessoas().isEmpty()) {
-            countBadgePessoa = ocorrenciaEdicao.getPessoas().size();
             pessoas = ocorrenciaEdicao.getPessoas();
             alteraBadgeQuantidade();
-
-
         }
         if (!ocorrenciaEdicao.getFoto().isEmpty()) {
             Picasso.get().load(ocorrenciaEdicao.getFoto())
                     .into(mImageView);
         }
-        botaoOk.setText("Atualizar");
+        botaoOk.setText(R.string.texto_botao_atualizar);
         ocorrencia = ocorrenciaEdicao;
 
     }
 
-
-    private void configuraFirebase() {
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mFirebaseStorage = FirebaseStorage.getInstance();
-        mFirebasestore = FirebaseFirestore.getInstance();
-
-        mOcorrenciaDatabaseReference = mFirebaseDatabase.getReference().child("ocorrencias").child(user.getUid());
-        mFotosOcorrenciasStorageReference = mFirebaseStorage.getReference().child("fotos_ocorrencias");
-
-    }
 
     private void configuraTitulo() {
         String titulo = mEditTextNatureza.getText().toString();
@@ -190,7 +163,6 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CODIGO_REQUISICAO_IMAGEM && resultCode == RESULT_OK) {
@@ -219,7 +191,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 } else {
 
-                    Toast.makeText(this, "Permissão Negada!, não será possível escolher uma foto!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, R.string.texto_permissao_negada, Toast.LENGTH_SHORT).show();
                 }
                 return;
             }
@@ -255,7 +227,6 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
 
         ImagemUtils imagemUtils = new ImagemUtils();
         imageUri = imagemUtils.carregaFoto(arquivoFInal.getPath());
-
 
         Picasso.get()
                 .load(imageUri)
@@ -304,7 +275,6 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
     }
 
     private void inserePessoaNaOcorrencia(Pessoa p) {
-
         pessoas.add(p);
         alteraBadgeQuantidade();
 
@@ -355,7 +325,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
     private void salvaFotoeExibeMensagem() {
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Salvando ocorrência...");
+        progressDialog.setTitle(getString(R.string.titulo_dialogo_salvando_foto));
         progressDialog.show();
 
         StorageReference fotoRef = mFotosOcorrenciasStorageReference.child(user.getEmail()).child(imageUri.getLastPathSegment());
@@ -376,7 +346,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                 double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                         .getTotalByteCount());
-                progressDialog.setMessage("Concluído " + (int) progress + "%");
+                progressDialog.setMessage(getString(R.string.texto_porcentagem_foto_upload) + (int) progress + "%");
                 //TODO adicionar mensagem de erro caso campo esteja vazio
             }
         });
@@ -395,7 +365,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         mFirebasestore.collection("ocorrencias").document("usuario").collection(ocorrencia.getUsuario().getEmail())
                 .document(ocorrencia.getFirestoreIdKey())
                 .set(ocorrencia);
-        Toast.makeText(this, "Ocorrência Atualizada", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Ocorrência Atualizada", Toast.LENGTH_SHORT).show();//todo criar alert ao inves de toast
         voltaParaHome();
     }
 

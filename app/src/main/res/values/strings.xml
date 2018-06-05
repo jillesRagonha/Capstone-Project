@@ -8,4 +8,9 @@
     <string name="editNome">Nome</string>
     <string name="erro_nome_pessoa">O nome da Pessoa não pode ser vazio</string>
     <string name="erro_documento_pessoa">O campo documento não pode estar vazio</string>
+    <string name="tituloToolbar">Lista de Ocorrências</string>
+    <string name="texto_botao_atualizar">Atualizar</string>
+    <string name="texto_permissao_negada">Permissão Negada!, não será possível escolher uma foto!</string>
+    <string name="titulo_dialogo_salvando_foto">Salvando ocorrência...</string>
+    <string name="texto_porcentagem_foto_upload">Concluído</string>
 </resources>

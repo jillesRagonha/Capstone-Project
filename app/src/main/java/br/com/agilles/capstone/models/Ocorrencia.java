@@ -10,7 +10,6 @@ import java.util.List;
 public class Ocorrencia implements Serializable {
 
     private String data;
-    private Endereco endereco;
     private String natureza;
     private String descricao;
     private List<Pessoa> pessoas;
@@ -44,13 +43,6 @@ public class Ocorrencia implements Serializable {
         this.data = data;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
 
     public String getNatureza() {
         return natureza;
