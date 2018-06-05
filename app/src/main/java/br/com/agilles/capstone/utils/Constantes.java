@@ -6,4 +6,5 @@ public interface Constantes {
     int CODIGO_REQUISICAO_PESSOA = 2;
     int CODIGO_REQUISICAO_LOGIN = 3;
     int CODIGO_RESULTADO_PESSOA_INSERIDA = 4;
+    String CHAVE_OCORRENCIA = "Ocorrencia";
 }

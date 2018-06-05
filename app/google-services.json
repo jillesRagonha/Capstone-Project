@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "501648627005",
+    "firebase_url": "https://capstone-c1c47.firebaseio.com",
+    "project_id": "capstone-c1c47",
+    "storage_bucket": "capstone-c1c47.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:501648627005:android:c912e5530683bf2e",
+        "android_client_info": {
+          "package_name": "br.com.agilles.capstone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "501648627005-ihdqggt7e8ho2t1li16204kctthk4tfe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWai4iCkc2qqCSGqkum5Cenfut1n0E5Is"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

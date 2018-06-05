@@ -30,7 +30,6 @@
             android:name=".ui.DetalhesOcorrenciaActivity"
             android:label="Detalhes"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.EditaOcorrenciaActivity"></activity>
     </application>
 
 </manifest>

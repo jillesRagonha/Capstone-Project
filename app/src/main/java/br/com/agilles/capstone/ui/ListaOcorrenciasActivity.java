@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -119,7 +121,10 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
     private void carregaOcorrencias(FirebaseUser user) {
         listaOcorrencias = new ArrayList<>();
 
-        db.collection(user.getEmail())
+        db.collection("ocorrencias")
+                .document("usuario")
+                .collection(user.getEmail())
+                .orderBy("dataCriacao", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -127,6 +132,8 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Ocorrencia ocorrencia = document.toObject(Ocorrencia.class);
+                                ocorrencia.setFirestoreIdKey(document.getId());
+
                                 listaOcorrencias.add(ocorrencia);
 
                             }
@@ -186,7 +193,6 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
             @Override
             public void onItemClick(Ocorrencia ocorrencia) {
                 vaiParaDetalhe(ocorrencia);
-                //TODO vai para tela de detalhes da ocorrencia
             }
         });
 
@@ -194,7 +200,7 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
 
     private void vaiParaDetalhe(Ocorrencia ocorrencia) {
         Intent intent = new Intent(this, DetalhesOcorrenciaActivity.class);
-        intent.putExtra("ocorrencia", ocorrencia);
+        intent.putExtra(CHAVE_OCORRENCIA, ocorrencia);
         startActivity(intent);
     }
 

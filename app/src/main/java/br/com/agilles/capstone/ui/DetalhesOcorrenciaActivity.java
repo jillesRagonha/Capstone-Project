@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,11 +13,12 @@ import com.squareup.picasso.Picasso;
 import br.com.agilles.capstone.R;
 import br.com.agilles.capstone.models.Ocorrencia;
 import br.com.agilles.capstone.ui.recyclerview.adapter.ListaPessoasAdapter;
+import br.com.agilles.capstone.utils.Constantes;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DetalhesOcorrenciaActivity extends AppCompatActivity {
+public class DetalhesOcorrenciaActivity extends AppCompatActivity implements Constantes {
 
     @BindView(R.id.detalhes_imagem_principal)
     ImageView mImagemPrincipal;
@@ -42,7 +41,7 @@ public class DetalhesOcorrenciaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detalhes_ocorrencia);
 
         ButterKnife.bind(this);
-        ocorrencia = (Ocorrencia) getIntent().getSerializableExtra("ocorrencia");
+        ocorrencia = (Ocorrencia) getIntent().getSerializableExtra(CHAVE_OCORRENCIA);
         preencheCampos(ocorrencia);
         criaListaPessoas(ocorrencia);
 
@@ -66,7 +65,7 @@ public class DetalhesOcorrenciaActivity extends AppCompatActivity {
     @OnClick(R.id.detalhe_btn_editar)
     public void editarOcorrencia(View v) {
         Intent vaiParaEdicao = new Intent(this, FormularioOcorrenciaActivity.class);
-        vaiParaEdicao.putExtra("Ocorrencia", ocorrencia);
+        vaiParaEdicao.putExtra(CHAVE_OCORRENCIA, ocorrencia);
         startActivity(vaiParaEdicao);
     }
 }

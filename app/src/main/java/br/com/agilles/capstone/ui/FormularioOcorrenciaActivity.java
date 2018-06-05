@@ -29,8 +29,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -82,6 +84,11 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
     @BindView(R.id.activity_formulario_imagem_principal)
     ImageView mImageView;
 
+    @BindView(R.id.formulario_add_ocorrencia_botao_ok)
+    Button botaoOk;
+
+    private Ocorrencia ocorrenciaEdicao;
+
     private Uri imageUri;
 
     Ocorrencia ocorrencia = new Ocorrencia();
@@ -105,6 +112,30 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
 
         configuraToolbar();
         configuraFirebase();
+        ocorrenciaEdicao = (Ocorrencia) getIntent().getSerializableExtra(CHAVE_OCORRENCIA);
+        if (ocorrenciaEdicao != null) {
+            preencheCampos();
+        }
+
+    }
+
+    private void preencheCampos() {
+        txtData.setText(ocorrenciaEdicao.getData());
+        mEditTextNatureza.setText(ocorrenciaEdicao.getNatureza());
+        mEditTextDescicao.setText(ocorrenciaEdicao.getDescricao());
+        if (!ocorrenciaEdicao.getPessoas().isEmpty()) {
+            countBadgePessoa = ocorrenciaEdicao.getPessoas().size();
+            pessoas = ocorrenciaEdicao.getPessoas();
+            alteraBadgeQuantidade();
+
+
+        }
+        if (!ocorrenciaEdicao.getFoto().isEmpty()) {
+            Picasso.get().load(ocorrenciaEdicao.getFoto())
+                    .into(mImageView);
+        }
+        botaoOk.setText("Atualizar");
+        ocorrencia = ocorrenciaEdicao;
 
     }
 
@@ -186,7 +217,6 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
             case 1: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                 } else {
 
                     Toast.makeText(this, "Permissão Negada!, não será possível escolher uma foto!", Toast.LENGTH_SHORT).show();
@@ -284,8 +314,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         if (mBadge.getVisibility() != View.VISIBLE) {
             mBadge.setVisibility(View.VISIBLE);
         }
-        countBadgePessoa++;
-        mBadge.setText(String.valueOf(countBadgePessoa));
+        mBadge.setText(String.valueOf(pessoas.size()));
     }
 
     @OnClick(R.id.formulario_add_ocorrencia_botao_ok)
@@ -315,9 +344,12 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
     }
 
     private void salvaOcorrenciaSemFoto() {
-        mFirebasestore.collection(ocorrencia.getUsuario().getEmail())
-                .add(ocorrencia);
-        finish();
+        if (ocorrencia.getFirestoreIdKey() != null) {
+            atualizaOcorrencia(ocorrencia);
+        } else {
+            salvaNovaOcorrencia(ocorrencia);
+        }
+        voltaParaHome();
     }
 
     private void salvaFotoeExibeMensagem() {
@@ -326,7 +358,6 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         progressDialog.setTitle("Salvando ocorrência...");
         progressDialog.show();
 
-
         StorageReference fotoRef = mFotosOcorrenciasStorageReference.child(user.getEmail()).child(imageUri.getLastPathSegment());
         fotoRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -334,22 +365,11 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
                 progressDialog.dismiss();
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
                 ocorrencia.setFoto(downloadUrl.toString());
-//                mOcorrenciaDatabaseReference.push().setValue(ocorrencia);
-                mFirebasestore.collection(ocorrencia.getUsuario().getEmail())
-                        .add(ocorrencia)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d("FORMULARIO", "DocumentSnapshot added with ID: " + documentReference.getId());
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("FORMULARIO", "Error adding document", e);
-                            }
-                        });
-                finish();
+                if (ocorrencia.getFirestoreIdKey() != null) {
+                    atualizaOcorrencia(ocorrencia);
+                } else {
+                    salvaNovaOcorrencia(ocorrencia);
+                }
             }
         }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -360,6 +380,30 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
                 //TODO adicionar mensagem de erro caso campo esteja vazio
             }
         });
+    }
+
+
+    private void salvaNovaOcorrencia(Ocorrencia ocorrencia) {
+        mFirebasestore.collection("ocorrencias").document("usuario").collection(ocorrencia.getUsuario().getEmail())
+                .add(ocorrencia);
+        voltaParaHome();
+
+
+    }
+
+    private void atualizaOcorrencia(Ocorrencia ocorrencia) {
+        mFirebasestore.collection("ocorrencias").document("usuario").collection(ocorrencia.getUsuario().getEmail())
+                .document(ocorrencia.getFirestoreIdKey())
+                .set(ocorrencia);
+        Toast.makeText(this, "Ocorrência Atualizada", Toast.LENGTH_SHORT).show();
+        voltaParaHome();
+    }
+
+    private void voltaParaHome() {
+        Intent voltaParaHome = new Intent(this, ListaOcorrenciasActivity.class);
+        voltaParaHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(voltaParaHome);
+
     }
 
 }

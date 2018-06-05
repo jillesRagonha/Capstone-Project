@@ -1,6 +1,10 @@
 package br.com.agilles.capstone.models;
 
+import com.google.firebase.firestore.Exclude;
+import com.google.firebase.firestore.ServerTimestamp;
+
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public class Ocorrencia implements Serializable {
@@ -12,8 +16,21 @@ public class Ocorrencia implements Serializable {
     private List<Pessoa> pessoas;
     private String foto;
     private Usuario usuario;
+    @Exclude
+    private String firestoreIdKey;
     private boolean favorito;
 
+    @ServerTimestamp
+    Date dataCriacao;
+
+
+    public String getFirestoreIdKey() {
+        return firestoreIdKey;
+    }
+
+    public void setFirestoreIdKey(String firestoreIdKey) {
+        this.firestoreIdKey = firestoreIdKey;
+    }
 
     public boolean isFavorito() {
         return favorito;
