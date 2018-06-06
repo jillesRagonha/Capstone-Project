@@ -4,7 +4,13 @@
     <dimen name="cardview_default_corner_radius">10dp</dimen>
     <dimen name="default_padding">8dp</dimen>
     <dimen name="ocorrencia_title_size">14sp</dimen>
-    <dimen name="navigation_header_pattern">160dp</dimen>
+    <dimen name="navigation_header_pattern">200dp</dimen>
     <dimen name="fab_margin_default">16dp</dimen>
     <dimen name="default_radio_margin">16dp</dimen>
+    <dimen name="tamanho_avatar">64dp</dimen>
+    <dimen name="padding_maior">16dp</dimen>
+    <dimen name="tamanho_texto_data">18sp</dimen>
+    <dimen name="width_badge">28dp</dimen>
+    <dimen name="tamanho_titulo">24sp</dimen>
+    <dimen name="cantos_bem_arredondados">15dp</dimen>
 </resources>

@@ -5,26 +5,28 @@
     android:background="@drawable/nav_background"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:padding="16dp"
+
+    android:padding="@dimen/default_padding"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/nav_image_perfil"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_pessoa" />
+        android:layout_width="@dimen/tamanho_avatar"
+        android:layout_height="@dimen/tamanho_avatar"
+        android:layout_margin="@dimen/default_margin" />
 
     <TextView
         android:id="@+id/nav_text_nome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:layout_margin="@dimen/default_margin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/textIconsColor" />
 
     <TextView
         android:id="@+id/nav_text_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
+        android:layout_margin="@dimen/default_margin"
+        android:textColor="@color/textIconsColor" />
 </LinearLayout>

@@ -13,4 +13,21 @@
     <string name="texto_permissao_negada">Permissão Negada!, não será possível escolher uma foto!</string>
     <string name="titulo_dialogo_salvando_foto">Salvando ocorrência...</string>
     <string name="texto_porcentagem_foto_upload">Concluído</string>
+    <string name="hint_natureza">Natureza</string>
+    <string name="hint_descricao">Descricao</string>
+    <string name="texto_botao_cadastrar">Cadastrar</string>
+    <string name="titulo_cadastro_pessoa">Cadastro de Pessoa</string>
+    <string name="titulo_documento">Documento</string>
+    <string name="radio_cpf">CPF</string>
+    <string name="radio_rg">RG</string>
+    <string name="radio_cnh">CNH</string>
+    <string name="hint_numero_documento">Nº Documento</string>
+    <string name="titulo_prisao">Prisão</string>
+    <string name="texto_switch_prisao">Indivíduo recolhido a Prisão?</string>
+    <string name="titulo_condicao">Condição</string>
+    <string name="texto_botao_inserir_pessoa">Inserir</string>
+    <string name="texto_data_ocorrencia">Data da ocorrência</string>
+    <string name="texto_natureza">Natureza</string>
+    <string name="titulo_pessoas">Pessoas</string>
+    <string name="carregando_ocorrencias_aguarde">Carregando Ocorrências... Aguarde....</string>
 </resources>

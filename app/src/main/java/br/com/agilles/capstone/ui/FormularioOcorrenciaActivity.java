@@ -3,13 +3,18 @@ package br.com.agilles.capstone.ui;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -54,6 +59,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FormularioOcorrenciaActivity extends AppCompatActivity implements Constantes {
+
+    @BindView(R.id.view_formulario)
+    CoordinatorLayout mLayout;
 
     @BindView(R.id.badge)
     NotificationBadge mBadge;
@@ -306,7 +314,20 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
             ocorrencia.setUsuario(usuarioLogado);
         }
         if (imageUri != null) {
-            salvaFotoeExibeMensagem();
+            if (estaConectado(this)) {
+                salvaFotoeExibeMensagem();
+
+            } else {
+                final Snackbar snackbar = Snackbar.make(botaoOk, "Sem conexão, a imagem não será salva!", Snackbar.LENGTH_LONG);
+                snackbar.setAction("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        snackbar.dismiss();
+                        salvaOcorrenciaSemFoto();
+                    }
+                });
+                snackbar.show();
+            }
         } else {
             salvaOcorrenciaSemFoto();
         }
@@ -365,7 +386,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         mFirebasestore.collection("ocorrencias").document("usuario").collection(ocorrencia.getUsuario().getEmail())
                 .document(ocorrencia.getFirestoreIdKey())
                 .set(ocorrencia);
-        Toast.makeText(this, "Ocorrência Atualizada", Toast.LENGTH_SHORT).show();//todo criar alert ao inves de toast
+        Toast.makeText(this, "Ocorrência Atualizada", Toast.LENGTH_SHORT).show();
         voltaParaHome();
     }
 
@@ -375,5 +396,16 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         startActivity(voltaParaHome);
 
     }
+
+    public static boolean estaConectado(Context contexto) {
+        ConnectivityManager connMgr = (ConnectivityManager) contexto.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
+        if (activeInfo != null && activeInfo.isConnected()) {
+            return true;
+        }
+        return false;
+    }
+
 
 }

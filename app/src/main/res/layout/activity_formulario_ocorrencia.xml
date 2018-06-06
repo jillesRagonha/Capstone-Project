@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/view_formulario"
     android:layout_height="match_parent"
     tools:context=".ui.FormularioOcorrenciaActivity">
 
@@ -35,7 +36,7 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/activity_formulario_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="?android:attr/actionBarSize"
                 app:layout_collapseMode="pin" />
 
 

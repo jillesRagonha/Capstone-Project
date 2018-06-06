@@ -7,13 +7,13 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/avatar_pessoa"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="@dimen/tamanho_avatar"
+        android:layout_height="@dimen/tamanho_avatar"
         android:layout_margin="@dimen/default_margin"
-        app:layout_constraintTop_toBottomOf="parent"
-        android:src="@drawable/avatar"
+        android:src="@drawable/ic_pessoa"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -22,17 +22,18 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/default_margin"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/colorPrimaryText"
         app:layout_constraintStart_toEndOf="@id/avatar_pessoa"
-        app:layout_constraintTop_toTopOf="@id/avatar_pessoa"
-        tools:text="Nome da Pessoa" />
+        app:layout_constraintTop_toTopOf="@id/avatar_pessoa" />
 
     <TextView
         android:id="@+id/item_pessoa_condicao"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorSecondaryText"
         app:layout_constraintStart_toStartOf="@id/item_pessoa_nome"
-        app:layout_constraintTop_toBottomOf="@id/item_pessoa_nome"
-        tools:text="Autor" />
+        app:layout_constraintTop_toBottomOf="@id/item_pessoa_nome" />
+
 
 </android.support.constraint.ConstraintLayout>

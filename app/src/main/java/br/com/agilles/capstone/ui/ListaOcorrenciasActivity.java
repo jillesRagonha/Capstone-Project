@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.firebase.ui.auth.AuthUI;
@@ -55,6 +56,12 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
+    @BindView(R.id.lista_ocorrencias_progress_bar)
+    ProgressBar mProgressbar;
+
+    @BindView(R.id.lista_ocorrencias_texto_loading)
+    TextView mTextViewLoading;
+
     TextView txtNomeUsuarioLogado;
     TextView txtEmailUsuarioLogado;
     CircleImageView imagePhotoUrlUsuarioLogado;
@@ -92,6 +99,7 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                usuario = firebaseAuth.getCurrentUser();
                 if (usuarioLogado(usuario)) {
                     carregaDadosUsuario(usuario);
                     carregaOcorrencias(usuario);
@@ -177,6 +185,14 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
                 vaiParaDetalhe(ocorrencia);
             }
         });
+        mProgressbar.setVisibility(View.GONE);
+        mTextViewLoading.setVisibility(View.GONE);
+
+        if (ocorrencia.isEmpty()) {
+            mTextViewLoading.setVisibility(View.VISIBLE);
+            mTextViewLoading.setText("Você não possui nenhuma ocorrência ainda, adicione uma ocorrência clicando no botão + no canto da tela");
+        }
+
 
     }
 

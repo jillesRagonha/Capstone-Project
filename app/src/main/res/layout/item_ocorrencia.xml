@@ -23,7 +23,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
             <ImageView
                 android:id="@+id/item_ocorrencia_image_view"
                 android:layout_width="match_parent"
@@ -45,13 +44,14 @@
                 app:layout_constraintEnd_toStartOf="@id/item_ocorrencia_texto_data"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divisor"
-                tools:text="Tráfico de entorpecentes" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@color/colorPrimaryText"/>
 
             <View
                 android:id="@+id/divisor"
                 android:layout_width="0dp"
                 android:layout_height="3dp"
-                android:background="@color/colorAccent"
+                android:background="@color/colorDivider"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/item_ocorrencia_image_view" />
@@ -61,14 +61,12 @@
                 android:id="@+id/item_ocorrencia_texto_data"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_marginStart="8dp"
-                android:padding="8dp"
-                android:text="18/02/2018"
+                android:layout_margin="@dimen/default_margin"
+                android:layout_marginStart="@dimen/default_margin"
+                android:padding="@dimen/default_padding"
+                android:textColor="@color/colorPrimaryText"
                 android:textAlignment="textEnd"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/item_ocorrencia_texto_bairro"
                 app:layout_constraintTop_toBottomOf="@id/divisor" />
 
 
