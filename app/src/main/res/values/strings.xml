@@ -30,4 +30,6 @@
     <string name="texto_natureza">Natureza</string>
     <string name="titulo_pessoas">Pessoas</string>
     <string name="carregando_ocorrencias_aguarde">Carregando Ocorrências... Aguarde....</string>
+    <string name="texto_nenhuma_ocorrencia">Você não possui nenhuma ocorrência ainda, adicione uma ocorrência clicando no botão + no canto da tela</string>
+    <string name="descricao_da_ocorrencia">Descrição da Ocorrência</string>
 </resources>

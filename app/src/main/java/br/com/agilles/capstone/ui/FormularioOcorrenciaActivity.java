@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
@@ -19,7 +20,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.ChangeBounds;
+import android.transition.Transition;
+import android.transition.TransitionManager;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -87,6 +92,8 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
     @BindView(R.id.formulario_add_ocorrencia_botao_ok)
     Button botaoOk;
 
+
+
     private Ocorrencia ocorrenciaEdicao;
     private Uri imageUri;
     Ocorrencia ocorrencia = new Ocorrencia();
@@ -108,25 +115,25 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         configuraToolbar();
         ocorrenciaEdicao = (Ocorrencia) getIntent().getSerializableExtra(CHAVE_OCORRENCIA);
         if (ocorrenciaEdicao != null) {
-            preencheCampos();
+            preencheCampos(ocorrenciaEdicao);
         }
 
     }
 
-    private void preencheCampos() {
-        txtData.setText(ocorrenciaEdicao.getData());
-        mEditTextNatureza.setText(ocorrenciaEdicao.getNatureza());
-        mEditTextDescicao.setText(ocorrenciaEdicao.getDescricao());
-        if (!ocorrenciaEdicao.getPessoas().isEmpty()) {
-            pessoas = ocorrenciaEdicao.getPessoas();
+    private void preencheCampos(Ocorrencia o) {
+        txtData.setText(o.getData());
+        mEditTextNatureza.setText(o.getNatureza());
+        mEditTextDescicao.setText(o.getDescricao());
+        if (!o.getPessoas().isEmpty()) {
+            pessoas = o.getPessoas();
             alteraBadgeQuantidade();
         }
-        if (!ocorrenciaEdicao.getFoto().isEmpty()) {
-            Picasso.get().load(ocorrenciaEdicao.getFoto())
+        if (!o.getFoto().isEmpty()) {
+            Picasso.get().load(o.getFoto())
                     .into(mImageView);
         }
         botaoOk.setText(R.string.texto_botao_atualizar);
-        ocorrencia = ocorrenciaEdicao;
+        ocorrencia = o;
 
     }
 
@@ -277,8 +284,10 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
     }
 
     private void vaiParaInsercaoDePessoa() {
+
         Intent vaiParaPessoa = new Intent(this, FormularioPessoasActivity.class);
         startActivityForResult(vaiParaPessoa, CODIGO_REQUISICAO_PESSOA);
+        overridePendingTransition(R.anim.side_in , R.anim.side_out);
 
     }
 
@@ -394,6 +403,8 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         Intent voltaParaHome = new Intent(this, ListaOcorrenciasActivity.class);
         voltaParaHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(voltaParaHome);
+        overridePendingTransition(R.anim.side_in , R.anim.side_out);
+
 
     }
 
@@ -407,5 +418,9 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         return false;
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.side_in , R.anim.side_out);
+    }
 }

@@ -12,12 +12,12 @@ public class Ocorrencia implements Serializable {
     private String data;
     private String natureza;
     private String descricao;
+
     private List<Pessoa> pessoas;
     private String foto;
     private Usuario usuario;
     @Exclude
     private String firestoreIdKey;
-    private boolean favorito;
 
     @ServerTimestamp
     Date dataCriacao;
@@ -31,10 +31,6 @@ public class Ocorrencia implements Serializable {
         this.firestoreIdKey = firestoreIdKey;
     }
 
-    public boolean isFavorito() {
-        return favorito;
-    }
-
     public String getData() {
         return data;
     }
@@ -42,7 +38,6 @@ public class Ocorrencia implements Serializable {
     public void setData(String data) {
         this.data = data;
     }
-
 
     public String getNatureza() {
         return natureza;

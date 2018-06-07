@@ -114,6 +114,8 @@ public class FormularioPessoasActivity extends AppCompatActivity implements Cons
         resultadoPessoa.putExtra(CHAVE_PESSOA, pessoa);
         setResult(CODIGO_RESULTADO_PESSOA_INSERIDA, resultadoPessoa);
         finish();
+        overridePendingTransition(R.anim.side_in , R.anim.side_out);
+
     }
 
     private boolean validaCampos() {
@@ -126,5 +128,10 @@ public class FormularioPessoasActivity extends AppCompatActivity implements Cons
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.side_in , R.anim.side_out);
 
+    }
 }

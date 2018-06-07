@@ -8,6 +8,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -34,6 +36,7 @@ import java.util.List;
 
 import br.com.agilles.capstone.R;
 import br.com.agilles.capstone.models.Ocorrencia;
+import br.com.agilles.capstone.models.Pessoa;
 import br.com.agilles.capstone.ui.recyclerview.adapter.ListaOcorrenciasAdapter;
 import br.com.agilles.capstone.ui.recyclerview.adapter.listener.OnItemClickListener;
 import br.com.agilles.capstone.utils.Constantes;
@@ -117,6 +120,7 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
         db.collection("ocorrencias")
                 .document("usuario")
                 .collection(user.getEmail())
+
                 .orderBy("dataCriacao", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -177,7 +181,13 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
     }
 
     private void configuraAdapter(List<Ocorrencia> ocorrencia, RecyclerView mRecyclerView) {
+
         adapter = new ListaOcorrenciasAdapter(this, ocorrencia);
+        if (estaNoModoPaisagem()) {
+            GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+
+            mRecyclerView.setLayoutManager(layoutManager);
+        }
         mRecyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -190,10 +200,14 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
 
         if (ocorrencia.isEmpty()) {
             mTextViewLoading.setVisibility(View.VISIBLE);
-            mTextViewLoading.setText("Você não possui nenhuma ocorrência ainda, adicione uma ocorrência clicando no botão + no canto da tela");
+            mTextViewLoading.setText(R.string.texto_nenhuma_ocorrencia);
         }
 
 
+    }
+
+    private boolean estaNoModoPaisagem() {
+        return getResources().getBoolean(R.bool.modoPaisagem);
     }
 
     private void vaiParaDetalhe(Ocorrencia ocorrencia) {
@@ -229,15 +243,39 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
                 break;
             case R.id.menu_favorito:
                 break;
+            case R.id.menu_ocorrencia_prisao:
+                carregaOcorrenciasComPrisao();
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    private void carregaOcorrenciasComPrisao() {
+        if (!listaOcorrencias.isEmpty()) {
+            mProgressbar.setVisibility(View.VISIBLE);
+            mTextViewLoading.setVisibility(View.VISIBLE);
+
+            List<Ocorrencia> ocorrenciasComPrisao = new ArrayList<>();
+            for (Ocorrencia o : listaOcorrencias) {
+                for (Pessoa p : o.getPessoas()) {
+                    if (p.isPreso()) {
+                        ocorrenciasComPrisao.add(o);
+                    }
+                }
+            }
+            mProgressbar.setVisibility(View.GONE);
+            mTextViewLoading.setVisibility(View.GONE);
+
+            configuraAdapter(ocorrenciasComPrisao, mRecyclerView);
+
+        }
+    }
+
     public void vaiParaFormulario(View view) {
         Intent intentVaiParaFormulario = new Intent(this, FormularioOcorrenciaActivity.class);
         startActivity(intentVaiParaFormulario);
+        overridePendingTransition(R.anim.side_in , R.anim.side_out);
 
     }
 
