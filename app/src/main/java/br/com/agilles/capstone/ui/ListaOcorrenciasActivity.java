@@ -1,12 +1,18 @@
 package br.com.agilles.capstone.ui;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,6 +46,8 @@ import br.com.agilles.capstone.models.Ocorrencia;
 import br.com.agilles.capstone.models.Pessoa;
 import br.com.agilles.capstone.ui.recyclerview.adapter.ListaOcorrenciasAdapter;
 import br.com.agilles.capstone.ui.recyclerview.adapter.listener.OnItemClickListener;
+import br.com.agilles.capstone.ui.widget.OcorrenciasWidget;
+import br.com.agilles.capstone.ui.widget.service.OcorrenciasWidgetService;
 import br.com.agilles.capstone.utils.Constantes;
 import br.com.agilles.capstone.utils.FirebaseUtils;
 import butterknife.BindView;
@@ -68,10 +77,12 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
     TextView txtNomeUsuarioLogado;
     TextView txtEmailUsuarioLogado;
     CircleImageView imagePhotoUrlUsuarioLogado;
+    AlertDialog mAlertDialog;
 
 
     private ListaOcorrenciasAdapter adapter;
-    private List<Ocorrencia> listaOcorrencias;
+    private List<Ocorrencia> listaOcorrencias = new ArrayList<>();
+
 
     //FIREBASE
     private FirebaseAuth mFirebaseAuth;
@@ -80,6 +91,7 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
     StorageReference mFotosOcorrenciasStorageReference = new FirebaseUtils().getmFotosOcorrenciasStorageReference();
     FirebaseFirestore db = new FirebaseUtils().getmFirebaseFirestore();
     FirebaseUser usuario = new FirebaseUtils().getUser();
+    private List<Ocorrencia> listaOcorrenciasParaWidget = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,10 +119,39 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
                     carregaDadosUsuario(usuario);
                     carregaOcorrencias(usuario);
                 } else {
-                    vaiParaLogin();
+                    if (estaConectado(ListaOcorrenciasActivity.this)) {
+                        vaiParaLogin();
+                    } else {
+                        mAlertDialog = criarDialogAlertaSemConexao().create();
+                        mAlertDialog.show();
+                    }
+
                 }
             }
         };
+    }
+
+    private AlertDialog.Builder criarDialogAlertaSemConexao() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.mensagem_dialog_sem_conexao);
+        builder.setPositiveButton(R.string.dialog_positive_button, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAndRemoveTask();
+            }
+        });
+        return builder;
+    }
+
+    private boolean estaConectado(Context contexto) {
+        ConnectivityManager connMgr = (ConnectivityManager) contexto.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
+        if (activeInfo != null && activeInfo.isConnected()) {
+            return true;
+        }
+        return false;
+
     }
 
 
@@ -135,11 +176,14 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
 
                             }
                             configuraAdapter(listaOcorrencias, mRecyclerView);
+                            FirebaseUtils.pegarInstancia().setOcorrencias(listaOcorrencias);
+
+
                         }
                     }
                 });
-
     }
+
 
     private void vaiParaLogin() {
         startActivityForResult(
@@ -213,6 +257,7 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
     private void vaiParaDetalhe(Ocorrencia ocorrencia) {
         Intent intent = new Intent(this, DetalhesOcorrenciaActivity.class);
         intent.putExtra(CHAVE_OCORRENCIA, ocorrencia);
+//        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mRecyclerView, "transicaoCompartilhada"); //TODO adicionar efeito de transicao entre imagem
         startActivity(intent);
     }
 
@@ -239,12 +284,14 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_lista_ocorrencias:
-                //TODO lidar com menu
+                carregaOcorrencias(usuario);
                 break;
             case R.id.menu_favorito:
+                Toast.makeText(this, "Funcionalidade Indisponível, aguarde por atualizações", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menu_ocorrencia_prisao:
                 carregaOcorrenciasComPrisao();
+                break;
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -275,7 +322,7 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
     public void vaiParaFormulario(View view) {
         Intent intentVaiParaFormulario = new Intent(this, FormularioOcorrenciaActivity.class);
         startActivity(intentVaiParaFormulario);
-        overridePendingTransition(R.anim.side_in , R.anim.side_out);
+        overridePendingTransition(R.anim.side_in, R.anim.side_out);
 
     }
 
@@ -294,6 +341,7 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
     @Override
     protected void onResume() {
         super.onResume();
+
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 

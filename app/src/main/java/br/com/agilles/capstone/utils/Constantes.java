@@ -10,4 +10,7 @@ public interface Constantes {
     int PICK_IMAGE = 6;
     int INSERE_PESSOA = 7;
     String CHAVE_OCORRENCIA = "Ocorrencia";
+    String CARREGA_OCORRENCIAS_WIDGET = "br.com.agilles.capstone.ui.widget.CARREGA_OCORRENCIAS_WIDGET";
+    String FILTRA_OCORRENCIA = "br.com.agilles.capstone.ui.widget.FILTRA_OCORRENCIA";
+    String FILTRA_OCORRENCIA_ITEM= "br.com.agilles.capstone.ui.widget.FILTRA_OCORRENCIA_ITEM";
 }

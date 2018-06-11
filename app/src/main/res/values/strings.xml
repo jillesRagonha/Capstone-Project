@@ -9,6 +9,7 @@
     <string name="erro_nome_pessoa">O nome da Pessoa não pode ser vazio</string>
     <string name="erro_documento_pessoa">O campo documento não pode estar vazio</string>
     <string name="tituloToolbar">Lista de Ocorrências</string>
+    <string name="tituloToolbarDetalhes">Detalhes da Ocorrência</string>
     <string name="texto_botao_atualizar">Atualizar</string>
     <string name="texto_permissao_negada">Permissão Negada!, não será possível escolher uma foto!</string>
     <string name="titulo_dialogo_salvando_foto">Salvando ocorrência...</string>
@@ -32,4 +33,10 @@
     <string name="carregando_ocorrencias_aguarde">Carregando Ocorrências... Aguarde....</string>
     <string name="texto_nenhuma_ocorrencia">Você não possui nenhuma ocorrência ainda, adicione uma ocorrência clicando no botão + no canto da tela</string>
     <string name="descricao_da_ocorrencia">Descrição da Ocorrência</string>
+    <string name="appwidget_text">Ocorrências</string>
+    <string name="carregando">Carregando...</string>
+    <string name="mensagem_dialog_sem_conexao">Você não possui uma conexão com a internet ativa. Certifique-se de estar conectado ao abrir o aplicativo pela primeira vez e tente novamente!</string>
+    <string name="dialog_positive_button">Entendido</string>
+    <string name="erro_natureza">Campo natureza precisa ser preenchido</string>
+    <string name="erro_campo_descricao">Campo Descrição precisa ser preenchido</string>
 </resources>

@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import br.com.agilles.capstone.R;
 import br.com.agilles.capstone.models.Ocorrencia;
 import br.com.agilles.capstone.ui.recyclerview.adapter.ListaPessoasAdapter;
+import br.com.agilles.capstone.ui.widget.OcorrenciasWidget;
 import br.com.agilles.capstone.utils.Constantes;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,9 +35,11 @@ public class DetalhesOcorrenciaActivity extends AppCompatActivity implements Con
     TextView txtDescricao;
     @BindView(R.id.recycler_view_pessoas)
     RecyclerView rvPessoas;
-
     ListaPessoasAdapter adapter;
     Ocorrencia ocorrencia;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
 
     @Override
@@ -41,10 +48,16 @@ public class DetalhesOcorrenciaActivity extends AppCompatActivity implements Con
         setContentView(R.layout.activity_detalhes_ocorrencia);
 
         ButterKnife.bind(this);
+        setaToolbar();
         ocorrencia = (Ocorrencia) getIntent().getSerializableExtra(CHAVE_OCORRENCIA);
         preencheCampos(ocorrencia);
         criaListaPessoas(ocorrencia);
+    }
 
+    private void setaToolbar() {
+        setSupportActionBar(mToolbar);
+        setTitle(getString(R.string.tituloToolbarDetalhes));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -67,5 +80,18 @@ public class DetalhesOcorrenciaActivity extends AppCompatActivity implements Con
         Intent vaiParaEdicao = new Intent(this, FormularioOcorrenciaActivity.class);
         vaiParaEdicao.putExtra(CHAVE_OCORRENCIA, ocorrencia);
         startActivity(vaiParaEdicao);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        supportFinishAfterTransition();
+        super.onBackPressed();
+
     }
 }

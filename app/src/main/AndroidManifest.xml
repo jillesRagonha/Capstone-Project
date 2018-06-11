@@ -30,6 +30,19 @@
             android:name=".ui.DetalhesOcorrenciaActivity"
             android:label="Detalhes"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver android:name=".ui.widget.OcorrenciasWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/ocorrencias_widget_info" />
+        </receiver>
+        <service android:name=".ui.widget.service.OcorrenciasWidgetService"
+            android:enabled="true"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>

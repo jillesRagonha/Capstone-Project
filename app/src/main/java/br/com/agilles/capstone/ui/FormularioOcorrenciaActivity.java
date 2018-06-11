@@ -16,6 +16,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -89,9 +90,14 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
     @BindView(R.id.activity_formulario_imagem_principal)
     ImageView mImageView;
 
+    @BindView(R.id.formulario_add_ocorrencia_layout_natureza)
+    TextInputLayout inputLayoutNatureza;
+
+    @BindView(R.id.formulario_add_ocorrencia_layout_descricao)
+    TextInputLayout inputLayoutDescricao;
+
     @BindView(R.id.formulario_add_ocorrencia_botao_ok)
     Button botaoOk;
-
 
 
     private Ocorrencia ocorrenciaEdicao;
@@ -121,6 +127,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
     }
 
     private void preencheCampos(Ocorrencia o) {
+
         txtData.setText(o.getData());
         mEditTextNatureza.setText(o.getNatureza());
         mEditTextDescicao.setText(o.getDescricao());
@@ -128,13 +135,34 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
             pessoas = o.getPessoas();
             alteraBadgeQuantidade();
         }
-        if (!o.getFoto().isEmpty()) {
+        if (o.getFoto() != null) {
             Picasso.get().load(o.getFoto())
                     .into(mImageView);
         }
         botaoOk.setText(R.string.texto_botao_atualizar);
         ocorrencia = o;
 
+    }
+
+    private boolean validaCampos() {
+        boolean validado = true;
+        if (mEditTextNatureza.getText().toString().isEmpty()) {
+            inputLayoutNatureza.setErrorEnabled(true);
+            inputLayoutNatureza.setError(getResources().getString(R.string.erro_natureza));
+            validado = false;
+        }
+
+        if (mEditTextDescicao.getText().toString().isEmpty()){
+
+            inputLayoutDescricao.setErrorEnabled(true);
+            inputLayoutDescricao.setError(getString(R.string.erro_campo_descricao));
+            validado = false;
+        }
+        if (txtData.getText().toString().isEmpty()) {
+            Toast.makeText(this, "Data em branco - Para selecionar uma data, clique no ícone do Calendário", Toast.LENGTH_LONG).show();
+            validado = false;
+        }
+        return validado;
     }
 
 
@@ -287,7 +315,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
 
         Intent vaiParaPessoa = new Intent(this, FormularioPessoasActivity.class);
         startActivityForResult(vaiParaPessoa, CODIGO_REQUISICAO_PESSOA);
-        overridePendingTransition(R.anim.side_in , R.anim.side_out);
+        overridePendingTransition(R.anim.side_in, R.anim.side_out);
 
     }
 
@@ -311,34 +339,37 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
     }
 
     private void pegaDadosOcorrencia() {
-        ocorrencia.setPessoas(pessoas);
-        ocorrencia.setData(txtData.getText().toString());
-        ocorrencia.setNatureza(mEditTextNatureza.getText().toString());
-        ocorrencia.setDescricao(mEditTextDescicao.getText().toString());
+        if (validaCampos()) {
 
-        if (user != null) {
-            Usuario usuarioLogado = new Usuario();
-            usuarioLogado.setNome(user.getDisplayName());
-            usuarioLogado.setEmail(user.getEmail());
-            ocorrencia.setUsuario(usuarioLogado);
-        }
-        if (imageUri != null) {
-            if (estaConectado(this)) {
-                salvaFotoeExibeMensagem();
+            ocorrencia.setPessoas(pessoas);
+            ocorrencia.setData(txtData.getText().toString());
+            ocorrencia.setNatureza(mEditTextNatureza.getText().toString());
+            ocorrencia.setDescricao(mEditTextDescicao.getText().toString());
 
-            } else {
-                final Snackbar snackbar = Snackbar.make(botaoOk, "Sem conexão, a imagem não será salva!", Snackbar.LENGTH_LONG);
-                snackbar.setAction("OK", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        snackbar.dismiss();
-                        salvaOcorrenciaSemFoto();
-                    }
-                });
-                snackbar.show();
+            if (user != null) {
+                Usuario usuarioLogado = new Usuario();
+                usuarioLogado.setNome(user.getDisplayName());
+                usuarioLogado.setEmail(user.getEmail());
+                ocorrencia.setUsuario(usuarioLogado);
             }
-        } else {
-            salvaOcorrenciaSemFoto();
+            if (imageUri != null) {
+                if (estaConectado(this)) {
+                    salvaFotoeExibeMensagem();
+
+                } else {
+                    final Snackbar snackbar = Snackbar.make(botaoOk, "Sem conexão, a imagem não será salva!", Snackbar.LENGTH_LONG);
+                    snackbar.setAction("OK", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            snackbar.dismiss();
+                            salvaOcorrenciaSemFoto();
+                        }
+                    });
+                    snackbar.show();
+                }
+            } else {
+                salvaOcorrenciaSemFoto();
+            }
         }
 
     }
@@ -377,7 +408,6 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
                 double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                         .getTotalByteCount());
                 progressDialog.setMessage(getString(R.string.texto_porcentagem_foto_upload) + (int) progress + "%");
-                //TODO adicionar mensagem de erro caso campo esteja vazio
             }
         });
     }
@@ -403,7 +433,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         Intent voltaParaHome = new Intent(this, ListaOcorrenciasActivity.class);
         voltaParaHome.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(voltaParaHome);
-        overridePendingTransition(R.anim.side_in , R.anim.side_out);
+        overridePendingTransition(R.anim.side_in, R.anim.side_out);
 
 
     }
@@ -421,6 +451,6 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.side_in , R.anim.side_out);
+        overridePendingTransition(R.anim.side_in, R.anim.side_out);
     }
 }

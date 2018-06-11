@@ -29,6 +29,7 @@
                 android:id="@+id/detalhes_imagem_principal"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:transitionName="transicaoCompartilhada"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax" />

@@ -6,13 +6,31 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class FirebaseUtils {
+import java.util.List;
 
+import br.com.agilles.capstone.models.Ocorrencia;
+
+public class FirebaseUtils {
 
     FirebaseStorage mFirebaseStorage;
     StorageReference mFotosOcorrenciasStorageReference;
     FirebaseUser user;
     FirebaseFirestore mFirebaseFirestore;
+    List<Ocorrencia> ocorrencias;
+
+    private static FirebaseUtils singleton;
+
+    public FirebaseUtils() {
+
+    }
+
+    public static FirebaseUtils pegarInstancia() {
+        if (singleton == null) {
+            singleton = new FirebaseUtils();
+        }
+        return singleton;
+    }
+
 
 
     public FirebaseFirestore getmFirebaseFirestore() {
@@ -30,5 +48,13 @@ public class FirebaseUtils {
     public FirebaseUser getUser() {
         return FirebaseAuth.getInstance().getCurrentUser();
 
+    }
+
+    public void setOcorrencias(List<Ocorrencia> ocorrencias) {
+        this.ocorrencias = ocorrencias;
+    }
+
+    public List<Ocorrencia> getOcorrencias() {
+        return ocorrencias;
     }
 }

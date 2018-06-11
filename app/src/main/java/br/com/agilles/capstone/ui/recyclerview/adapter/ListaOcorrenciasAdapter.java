@@ -82,6 +82,7 @@ public class ListaOcorrenciasAdapter extends RecyclerView.Adapter<ListaOcorrenci
 
         public void vinculaOcorrencia(Ocorrencia ocorrencia) {
             this.ocorrencia = ocorrencia;
+
             preencheCampos(ocorrencia);
 
         }
