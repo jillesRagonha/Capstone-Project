@@ -192,7 +192,6 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
                         .setIsSmartLockEnabled(false)
                         .setAvailableProviders(Arrays.asList(
                                 new AuthUI.IdpConfig.EmailBuilder().build(),
-                                new AuthUI.IdpConfig.PhoneBuilder().build(),
                                 new AuthUI.IdpConfig.GoogleBuilder().build()))
                         .build(),
                 CODIGO_REQUISICAO_LOGIN);
