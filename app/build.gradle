@@ -5,8 +5,8 @@ android {
         config {
             keyAlias 'MinhaChave'
             keyPassword 'j1ll3sr4g0nh4'
-            storeFile file('C:/Users/jilles/.android/keystores/keystores.jks')
             storePassword 'a1s2d3'
+            storeFile file('../keystores.jsk')
         }
     }
     compileSdkVersion 27
