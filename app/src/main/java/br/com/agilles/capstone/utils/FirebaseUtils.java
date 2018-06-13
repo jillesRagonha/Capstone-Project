@@ -12,19 +12,19 @@ import br.com.agilles.capstone.models.Ocorrencia;
 
 public class FirebaseUtils {
 
-     FirebaseStorage mFirebaseStorage;
-     StorageReference mFotosOcorrenciasStorageReference;
-     FirebaseUser user;
-     FirebaseFirestore mFirebaseFirestore;
-     List<Ocorrencia> ocorrencias;
+    FirebaseStorage mFirebaseStorage;
+    StorageReference mFotosOcorrenciasStorageReference;
+    FirebaseUser user;
+    FirebaseFirestore mFirebaseFirestore;
+    List<Ocorrencia> ocorrencias;
 
     private static FirebaseUtils singleton;
 
-   public FirebaseUtils() {
+    public FirebaseUtils() {
 
     }
 
-    public   static FirebaseUtils pegarInstancia() {
+    public static FirebaseUtils pegarInstancia() {
         if (singleton == null) {
             singleton = new FirebaseUtils();
         }

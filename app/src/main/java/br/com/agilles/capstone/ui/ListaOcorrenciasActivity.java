@@ -250,8 +250,8 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
     private void vaiParaDetalhe(Ocorrencia ocorrencia) {
         Intent intent = new Intent(this, DetalhesOcorrenciaActivity.class);
         intent.putExtra(CHAVE_OCORRENCIA, ocorrencia);
-        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mRecyclerView, "transicaoCompartilhada"); //TODO adicionar efeito de transicao entre imagem
-        startActivity(intent, optionsCompat.toBundle());
+//        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mRecyclerView, "transicaoCompartilhada"); //TODO adicionar efeito de transicao entre imagem
+        startActivity(intent);
     }
 
 

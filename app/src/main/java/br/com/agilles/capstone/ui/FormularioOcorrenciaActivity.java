@@ -146,7 +146,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
             validado = false;
         }
 
-        if (mEditTextDescicao.getText().toString().isEmpty()){
+        if (mEditTextDescicao.getText().toString().isEmpty()) {
 
             inputLayoutDescricao.setErrorEnabled(true);
             inputLayoutDescricao.setError(getString(R.string.erro_campo_descricao));
@@ -226,6 +226,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
             case 1: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mImageCalendario.callOnClick();
                 } else {
 
                     Toast.makeText(this, R.string.texto_permissao_negada, Toast.LENGTH_SHORT).show();
@@ -258,7 +259,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         return requestCode == CODIGO_REQUISICAO_PESSOA;
     }
 
-    private void setaImagem(Intent data) throws FileNotFoundException {
+    private void setaImagem(Intent data) {
         imageUri = data.getData();
         File arquivoFInal = pegaArquivoDaImagem();
 
