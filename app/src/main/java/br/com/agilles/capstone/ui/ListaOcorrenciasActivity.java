@@ -76,25 +76,20 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
     CircleImageView imagePhotoUrlUsuarioLogado;
     AlertDialog mAlertDialog;
 
-
     private ListaOcorrenciasAdapter adapter;
     private List<Ocorrencia> listaOcorrencias = new ArrayList<>();
-
 
     //FIREBASE
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
-    FirebaseStorage mFirebaseStorage = new FirebaseUtils().getmFirebaseStorage();
-    StorageReference mFotosOcorrenciasStorageReference = new FirebaseUtils().getmFotosOcorrenciasStorageReference();
     FirebaseFirestore db = new FirebaseUtils().getmFirebaseFirestore();
     FirebaseUser usuario = new FirebaseUtils().getUser();
-    private List<Ocorrencia> listaOcorrenciasParaWidget = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_ocorrencias);
-
+        FirebaseUtils.pegarInstancia().setContext(this);
         inicializaFirebase();
         ButterKnife.bind(this);
         setaToolbar();

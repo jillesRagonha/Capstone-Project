@@ -13,7 +13,7 @@
     <string name="texto_botao_atualizar">Atualizar</string>
     <string name="texto_permissao_negada">Permissão Negada!, não será possível escolher uma foto!</string>
     <string name="titulo_dialogo_salvando_foto">Salvando ocorrência...</string>
-    <string name="texto_porcentagem_foto_upload">Concluído</string>
+    <string name="texto_porcentagem_foto_upload">Salvando... </string>
     <string name="hint_natureza">Natureza</string>
     <string name="hint_descricao">Descricao</string>
     <string name="texto_botao_cadastrar">Cadastrar</string>
@@ -57,4 +57,5 @@
     <string name="condicao_autor">Autor</string>
     <string name="condicao_vitima">Vítima</string>
     <string name="condicao_testemunha">Testemunha</string>
+    <string name="pasta_fotos_ocorrencias" translatable="false">fotos_ocorrencias</string>
 </resources>

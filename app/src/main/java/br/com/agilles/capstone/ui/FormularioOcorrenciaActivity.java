@@ -100,7 +100,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
     List<Pessoa> pessoas = new ArrayList<>();
 
     FirebaseStorage mFirebaseStorage = new FirebaseUtils().getmFirebaseStorage();
-    StorageReference mFotosOcorrenciasStorageReference = new FirebaseUtils().getmFotosOcorrenciasStorageReference();
+    StorageReference mFotosOcorrenciasStorageReference;
     FirebaseUser user = new FirebaseUtils().getUser();
 
     FirebaseFirestore mFirebasestore = new FirebaseUtils().getmFirebaseFirestore();
@@ -110,6 +110,8 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario_ocorrencia);
+        FirebaseUtils.pegarInstancia().setContext(this);
+        mFotosOcorrenciasStorageReference = new FirebaseUtils(this).getmFotosOcorrenciasStorageReference();
         ButterKnife.bind(this);
 
         configuraToolbar();
@@ -226,7 +228,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
             case 1: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mImageCalendario.callOnClick();
+
                 } else {
 
                     Toast.makeText(this, R.string.texto_permissao_negada, Toast.LENGTH_SHORT).show();

@@ -69,8 +69,6 @@ public class OcorrenciasWidgetAdapter implements RemoteViewsService.RemoteViewsF
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
-
-
         Intent intentFiltro = new Intent();
         intentFiltro.putExtra(OcorrenciasWidget.FILTRA_OCORRENCIA_ITEM, ocorrencias.get(position).getFirestoreIdKey());
         views.setOnClickFillInIntent(R.id.rl_container, intentFiltro);
