@@ -259,7 +259,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         return requestCode == CODIGO_REQUISICAO_PESSOA;
     }
 
-    private void setaImagem(Intent data) {
+    private void setaImagem(Intent data) throws FileNotFoundException {
         imageUri = data.getData();
         File arquivoFInal = pegaArquivoDaImagem();
 
