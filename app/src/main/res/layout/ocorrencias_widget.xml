@@ -24,6 +24,7 @@
             android:textSize="@dimen/tamanho_titulo" />
 
         <ImageView
+            android:contentDescription="@string/content_icone_widget_atualizar"
             android:id="@+id/iv_update_collection"
             android:layout_width="24dp"
             android:layout_height="24dp"
@@ -34,6 +35,7 @@
 
         <ImageView
             android:id="@+id/iv_open_app"
+            android:contentDescription="@string/content_icone_widget_abrir"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentRight="true"
@@ -45,7 +47,7 @@
         android:id="@+id/lv_collection"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"></ListView>
+        android:layout_weight="1" />
 
     <TextView
         android:id="@+id/tv_loading"

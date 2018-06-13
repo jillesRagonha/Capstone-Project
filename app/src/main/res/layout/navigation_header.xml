@@ -10,6 +10,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:contentDescription="@string/content_avatar_usuario_logado"
         android:id="@+id/nav_image_perfil"
         android:layout_width="@dimen/tamanho_avatar"
         android:layout_height="@dimen/tamanho_avatar"

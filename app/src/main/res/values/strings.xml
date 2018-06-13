@@ -39,4 +39,15 @@
     <string name="dialog_positive_button">Entendido</string>
     <string name="erro_natureza">Campo natureza precisa ser preenchido</string>
     <string name="erro_campo_descricao">Campo Descrição precisa ser preenchido</string>
+    <string name="menu_nav_todas_ocorrencias">Todas Ocorrências</string>
+    <string name="menu_nav_favoritos">Favoritos</string>
+    <string name="menu_nav_ocorrencias_com_prisao">Ocorrências com prisão</string>
+    <string name="menu_nav_pesquisar">Pesquisar</string>
+    <string name="menu_nav_procurar_ocorrencia">Procurar Ocorrência</string>
+    <string name="content_imagem_ocorrencia">Imagem principal da Ocorrencia</string>
+    <string name="content_icone_calendario">Imagem de calendario</string>
+    <string name="content_icone_pessoa">Icone de avatar de pessoa</string>
+    <string name="content_avatar_usuario_logado">Imagem do avatar do usuario logado</string>
+    <string name="content_icone_widget_atualizar">Icone Atualizar</string>
+    <string name="content_icone_widget_abrir">icone abrir</string>
 </resources>

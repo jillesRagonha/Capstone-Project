@@ -12,25 +12,24 @@ import br.com.agilles.capstone.models.Ocorrencia;
 
 public class FirebaseUtils {
 
-    FirebaseStorage mFirebaseStorage;
-    StorageReference mFotosOcorrenciasStorageReference;
-    FirebaseUser user;
-    FirebaseFirestore mFirebaseFirestore;
-    List<Ocorrencia> ocorrencias;
+    private FirebaseStorage mFirebaseStorage;
+    private StorageReference mFotosOcorrenciasStorageReference;
+    private FirebaseUser user;
+    private FirebaseFirestore mFirebaseFirestore;
+    private List<Ocorrencia> ocorrencias;
 
     private static FirebaseUtils singleton;
 
-    public FirebaseUtils() {
+   private FirebaseUtils() {
 
     }
 
-    public static FirebaseUtils pegarInstancia() {
+    private static FirebaseUtils pegarInstancia() {
         if (singleton == null) {
             singleton = new FirebaseUtils();
         }
         return singleton;
     }
-
 
 
     public FirebaseFirestore getmFirebaseFirestore() {
@@ -57,4 +56,22 @@ public class FirebaseUtils {
     public List<Ocorrencia> getOcorrencias() {
         return ocorrencias;
     }
+
+    public void setmFirebaseStorage(FirebaseStorage mFirebaseStorage) {
+        this.mFirebaseStorage = mFirebaseStorage;
+    }
+
+    public void setmFotosOcorrenciasStorageReference(StorageReference mFotosOcorrenciasStorageReference) {
+        this.mFotosOcorrenciasStorageReference = mFotosOcorrenciasStorageReference;
+    }
+
+    public void setUser(FirebaseUser user) {
+        this.user = user;
+    }
+
+    public void setmFirebaseFirestore(FirebaseFirestore mFirebaseFirestore) {
+        this.mFirebaseFirestore = mFirebaseFirestore;
+    }
+
+
 }

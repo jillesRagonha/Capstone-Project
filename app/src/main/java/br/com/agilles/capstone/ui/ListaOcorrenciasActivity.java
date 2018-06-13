@@ -256,8 +256,8 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
     private void vaiParaDetalhe(Ocorrencia ocorrencia) {
         Intent intent = new Intent(this, DetalhesOcorrenciaActivity.class);
         intent.putExtra(CHAVE_OCORRENCIA, ocorrencia);
-//        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mRecyclerView, "transicaoCompartilhada"); //TODO adicionar efeito de transicao entre imagem
-        startActivity(intent);
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mRecyclerView, "transicaoCompartilhada"); //TODO adicionar efeito de transicao entre imagem
+        startActivity(intent, optionsCompat.toBundle());
     }
 
 
@@ -350,6 +350,17 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        super.onSaveInstanceState(outState);
 
 
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+    }
 }

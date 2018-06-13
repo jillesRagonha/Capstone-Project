@@ -28,6 +28,7 @@
             <ImageView
                 android:id="@+id/detalhes_imagem_principal"
                 android:layout_width="match_parent"
+                android:contentDescription="@string/content_imagem_ocorrencia"
                 android:layout_height="300dp"
                 android:transitionName="transicaoCompartilhada"
                 android:fitsSystemWindows="true"

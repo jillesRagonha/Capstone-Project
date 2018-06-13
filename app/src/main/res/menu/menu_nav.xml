@@ -5,30 +5,30 @@
         <item
             android:id="@+id/menu_lista_ocorrencias"
             android:icon="@drawable/ic_lista_ocorrencias"
-            android:title="Todas Ocorrências" />
+            android:title="@string/menu_nav_todas_ocorrencias" />
 
         <item
             android:id="@+id/menu_favorito"
             android:icon="@drawable/ic_favorito"
-            android:title="Favoritos" />
+            android:title="@string/menu_nav_favoritos" />
 
         <item
             android:id="@+id/menu_ocorrencia_prisao"
             android:icon="@drawable/prisoner"
-            android:title="Ocorrências com prisão" />
+            android:title="@string/menu_nav_ocorrencias_com_prisao" />
 
 
     </group>
 
     <item
         android:id="@+id/submenu_outros"
-        android:title="Pesquisar">
+        android:title="@string/menu_nav_pesquisar">
 
         <menu>
             <item
                 android:id="@+id/menu_procurar"
                 android:icon="@drawable/ic_procurar"
-                android:title="Procurar Ocorrência" />
+                android:title="@string/menu_nav_procurar_ocorrencia" />
 
         </menu>
 

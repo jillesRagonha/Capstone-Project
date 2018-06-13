@@ -27,6 +27,7 @@
 
             <ImageView
                 android:id="@+id/activity_formulario_imagem_principal"
+                android:contentDescription="@string/content_imagem_ocorrencia"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:fitsSystemWindows="true"
