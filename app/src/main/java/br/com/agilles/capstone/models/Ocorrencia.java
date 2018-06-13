@@ -19,9 +19,16 @@ public class Ocorrencia implements Serializable {
     @Exclude
     private String firestoreIdKey;
 
-    @ServerTimestamp
-    Date dataCriacao;
+    private Date dataCriacao;
 
+    @ServerTimestamp
+    public Date getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
 
     public String getFirestoreIdKey() {
         return firestoreIdKey;

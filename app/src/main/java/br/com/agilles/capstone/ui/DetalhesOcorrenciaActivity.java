@@ -8,16 +8,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 import br.com.agilles.capstone.R;
 import br.com.agilles.capstone.models.Ocorrencia;
 import br.com.agilles.capstone.ui.recyclerview.adapter.ListaPessoasAdapter;
-import br.com.agilles.capstone.ui.widget.OcorrenciasWidget;
 import br.com.agilles.capstone.utils.Constantes;
 import butterknife.BindView;
 import butterknife.ButterKnife;

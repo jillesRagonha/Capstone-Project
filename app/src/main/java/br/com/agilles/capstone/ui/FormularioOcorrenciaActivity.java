@@ -40,8 +40,10 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import br.com.agilles.capstone.R;
@@ -228,7 +230,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
 
                     Toast.makeText(this, R.string.texto_permissao_negada, Toast.LENGTH_SHORT).show();
                 }
-                return;
+
             }
 
         }
@@ -337,6 +339,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
             ocorrencia.setData(txtData.getText().toString());
             ocorrencia.setNatureza(mEditTextNatureza.getText().toString());
             ocorrencia.setDescricao(mEditTextDescicao.getText().toString());
+            ocorrencia.setDataCriacao(new Timestamp(new Date().getTime()));
 
             if (user != null) {
                 Usuario usuarioLogado = new Usuario();
@@ -406,6 +409,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
 
 
     private void salvaNovaOcorrencia(Ocorrencia ocorrencia) {
+
         mFirebasestore.collection("ocorrencias").document("usuario").collection(ocorrencia.getUsuario().getEmail())
                 .add(ocorrencia);
         voltaParaHome();
@@ -434,10 +438,7 @@ public class FormularioOcorrenciaActivity extends AppCompatActivity implements C
         ConnectivityManager connMgr = (ConnectivityManager) contexto.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
-        if (activeInfo != null && activeInfo.isConnected()) {
-            return true;
-        }
-        return false;
+        return activeInfo != null && activeInfo.isConnected();
     }
 
     @Override

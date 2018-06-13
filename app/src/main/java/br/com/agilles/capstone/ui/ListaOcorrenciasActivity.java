@@ -28,7 +28,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -46,8 +45,6 @@ import br.com.agilles.capstone.models.Ocorrencia;
 import br.com.agilles.capstone.models.Pessoa;
 import br.com.agilles.capstone.ui.recyclerview.adapter.ListaOcorrenciasAdapter;
 import br.com.agilles.capstone.ui.recyclerview.adapter.listener.OnItemClickListener;
-import br.com.agilles.capstone.ui.widget.OcorrenciasWidget;
-import br.com.agilles.capstone.ui.widget.service.OcorrenciasWidgetService;
 import br.com.agilles.capstone.utils.Constantes;
 import br.com.agilles.capstone.utils.FirebaseUtils;
 import butterknife.BindView;
@@ -147,10 +144,7 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
         ConnectivityManager connMgr = (ConnectivityManager) contexto.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeInfo = connMgr.getActiveNetworkInfo();
-        if (activeInfo != null && activeInfo.isConnected()) {
-            return true;
-        }
-        return false;
+        return activeInfo != null && activeInfo.isConnected();
 
     }
 

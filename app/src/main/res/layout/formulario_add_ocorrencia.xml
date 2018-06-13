@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-bold"
-            android:text="Ocorrência"
+            android:text="@string/titulo_ocorrencia"
             android:textSize="@dimen/tamanho_titulo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-black"
                         android:gravity="center"
-                        android:hint="00/00/0000"
+                        android:hint="@string/hint_data"
                         android:padding="@dimen/default_padding"
                         android:textColor="@color/colorPrimaryText"
                         android:textSize="@dimen/tamanho_texto_data" />
@@ -144,9 +144,9 @@
                             android:layout_width="@dimen/width_badge"
                             android:layout_height="@dimen/width_badge"
                             android:layout_alignTop="@id/formulario_add_ocorrencia_icone_pessoa"
-                            android:layout_marginLeft="-16dp"
+                            android:layout_marginStart="-16dp"
                             android:layout_marginTop="-8dp"
-                            android:layout_toRightOf="@id/formulario_add_ocorrencia_icone_pessoa"
+                            android:layout_toEndOf="@id/formulario_add_ocorrencia_icone_pessoa"
                             app:nbBackground="@drawable/badge" />
                     </RelativeLayout>
 

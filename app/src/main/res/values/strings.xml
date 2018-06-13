@@ -52,4 +52,9 @@
     <string name="content_icone_widget_abrir">icone abrir</string>
     <string name="content_icone_natureza">icone de natureza da ocorrencia</string>
     <string name="content_icone_descricao">icone para descricao da ocorrencia</string>
+    <string name="titulo_ocorrencia">Ocorrência</string>
+    <string name="hint_data">00/00/0000</string>
+    <string name="condicao_autor">Autor</string>
+    <string name="condicao_vitima">Vítima</string>
+    <string name="condicao_testemunha">Testemunha</string>
 </resources>

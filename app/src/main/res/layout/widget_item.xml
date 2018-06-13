@@ -2,39 +2,42 @@
     android:id="@+id/rl_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
-    android:background="@color/backgroundPadrao">
+    android:background="@color/backgroundPadrao"
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/iv_ocorrencia"
-        android:layout_alignParentLeft="true"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:scaleType="centerCrop"
-        android:layout_marginRight="@dimen/default_margin" />
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:contentDescription="@string/content_imagem_ocorrencia"
+        android:scaleType="centerCrop" />
 
     <TextView
-        android:textColor="@color/colorPrimaryText"
-        android:layout_toRightOf="@+id/iv_ocorrencia"
         android:id="@+id/tv_model"
-        android:layout_alignParentEnd="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_marginBottom="5dp"
+        android:layout_toEndOf="@+id/iv_ocorrencia"
         android:fontFamily="sans-serif-black"
-        android:paddingRight="16dp"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:textColor="@color/colorPrimaryText"
         android:textSize="@dimen/tamanho_titulo" />
 
     <TextView
-        android:textColor="@color/colorPrimaryText"
-        android:layout_below="@+id/tv_model"
-        android:layout_alignLeft="@+id/tv_model"
         android:id="@+id/tv_brand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="16dp"
-        android:textSize="@dimen/tamanho_titulo"
         android:layout_alignParentEnd="true"
-        android:fontFamily="sans-serif-black"/>
+        android:layout_alignStart="@+id/tv_model"
+        android:layout_below="@+id/tv_model"
+        android:fontFamily="sans-serif-black"
+        android:paddingEnd="16dp"
+        android:paddingLeft="16dp"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/tamanho_titulo" />
 
 </RelativeLayout>

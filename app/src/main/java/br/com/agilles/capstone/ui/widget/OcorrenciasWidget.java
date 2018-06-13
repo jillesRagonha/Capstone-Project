@@ -43,9 +43,9 @@ public class OcorrenciasWidget extends AppWidgetProvider implements Constantes {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
-        for (int i = 0; i < appWidgetIds.length; i++) {
+        for (int appWidgetId : appWidgetIds) {
             Intent intentService = new Intent(context, OcorrenciasWidgetService.class);
-            intentService.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
+            intentService.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.ocorrencias_widget);
             views.setRemoteAdapter(R.id.lv_collection, intentService);
@@ -53,8 +53,8 @@ public class OcorrenciasWidget extends AppWidgetProvider implements Constantes {
 
             Intent intentCarregaOcorrencias = new Intent(context, OcorrenciasWidget.class);
             intentCarregaOcorrencias.setAction(CARREGA_OCORRENCIAS_WIDGET);
-            intentCarregaOcorrencias.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
-            PendingIntent pendingIntentCarregaOcorrencias = PendingIntent.getBroadcast(context, 0, intentCarregaOcorrencias,0);
+            intentCarregaOcorrencias.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            PendingIntent pendingIntentCarregaOcorrencias = PendingIntent.getBroadcast(context, 0, intentCarregaOcorrencias, 0);
             views.setOnClickPendingIntent(R.id.iv_update_collection, pendingIntentCarregaOcorrencias);
 
             Intent intentAbreApp = new Intent(context, ListaOcorrenciasActivity.class);
@@ -66,8 +66,8 @@ public class OcorrenciasWidget extends AppWidgetProvider implements Constantes {
             PendingIntent pendingFiltraOcorrencias = PendingIntent.getBroadcast(context, 0, ocorrenciaFiltrada, 0);
             views.setPendingIntentTemplate(R.id.lv_collection, pendingFiltraOcorrencias);
 
-            appWidgetManager.updateAppWidget(appWidgetIds[i], views);
-            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds[i], R.id.lv_collection);
+            appWidgetManager.updateAppWidget(appWidgetId, views);
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.lv_collection);
 
 
         }

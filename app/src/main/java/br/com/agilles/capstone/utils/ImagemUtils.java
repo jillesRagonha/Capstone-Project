@@ -9,7 +9,7 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.media.ExifInterface;
+import android.support.media.ExifInterface;
 import android.net.Uri;
 
 import com.squareup.picasso.Transformation;
@@ -109,13 +109,13 @@ public class ImagemUtils implements Transformation {
     }
 
     private static int pegaCodigoOrientacao(String caminhoFoto) throws IOException {
-        ExifInterface exif = new ExifInterface(caminhoFoto.toString());
+        ExifInterface exif = new ExifInterface(caminhoFoto);
         String orientacao = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
         return Integer.parseInt(orientacao);
     }
 
     private Bitmap abreFotoERotaciona(String caminhoFoto, int angulo) {
-        Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto.toString());
+        Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
         Matrix matrix = new Matrix();
         matrix.postRotate(angulo);
 

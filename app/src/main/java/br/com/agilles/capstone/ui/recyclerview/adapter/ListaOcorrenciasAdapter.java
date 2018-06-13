@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -16,11 +15,9 @@ import java.util.List;
 
 import br.com.agilles.capstone.R;
 import br.com.agilles.capstone.models.Ocorrencia;
-import br.com.agilles.capstone.models.Pessoa;
 import br.com.agilles.capstone.ui.recyclerview.adapter.listener.OnItemClickListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class ListaOcorrenciasAdapter extends RecyclerView.Adapter<ListaOcorrenciasAdapter.OcorrenciasViewHolder> {
 
