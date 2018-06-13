@@ -50,4 +50,6 @@
     <string name="content_avatar_usuario_logado">Imagem do avatar do usuario logado</string>
     <string name="content_icone_widget_atualizar">Icone Atualizar</string>
     <string name="content_icone_widget_abrir">icone abrir</string>
+    <string name="content_icone_natureza">icone de natureza da ocorrencia</string>
+    <string name="content_icone_descricao">icone para descricao da ocorrencia</string>
 </resources>
