@@ -103,13 +103,16 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
     private void inicializaFirebase() {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+
+
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 usuario = firebaseAuth.getCurrentUser();
                 if (usuarioLogado(usuario)) {
                     carregaDadosUsuario(usuario);
-                    carregaOcorrencias(usuario);
+
+
                 } else {
                     if (estaConectado(ListaOcorrenciasActivity.this)) {
                         vaiParaLogin();
@@ -121,6 +124,8 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
                 }
             }
         };
+        carregaOcorrencias(usuario);
+
     }
 
     private AlertDialog.Builder criarDialogAlertaSemConexao() {
@@ -245,8 +250,8 @@ public class ListaOcorrenciasActivity extends AppCompatActivity implements Navig
     private void vaiParaDetalhe(Ocorrencia ocorrencia) {
         Intent intent = new Intent(this, DetalhesOcorrenciaActivity.class);
         intent.putExtra(CHAVE_OCORRENCIA, ocorrencia);
-//        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mRecyclerView, "transicaoCompartilhada"); //TODO adicionar efeito de transicao entre imagem
-        startActivity(intent);
+        ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(this, mRecyclerView, "transicaoCompartilhada"); //TODO adicionar efeito de transicao entre imagem
+        startActivity(intent, optionsCompat.toBundle());
     }
 
 
